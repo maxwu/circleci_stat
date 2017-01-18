@@ -1,5 +1,7 @@
 # 2017-01-04: Developer's configuration.
 config.json
+config.yaml
+config.yml
 
 # Intellij IDEA
 .idea/
