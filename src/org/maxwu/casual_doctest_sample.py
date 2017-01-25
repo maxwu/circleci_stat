@@ -55,10 +55,12 @@ def casual_find_pos_with_bin(n, from_list):
     end = len(from_list) - 1
     found = False
 
+    # k1: The condition is end>=start;
+    # k2: Slice is [begin..mid-1] or [mid+1,end]
     while end >= start and not found:
         mid = (start + end) / 2
-        sys.stderr.write("n=%d, start=%d, end=%d, mid=%d, list=%s\n"%(n, start, end, mid, from_list))
-        sys.stderr.flush()
+        # sys.stderr.write("n=%d, start=%d, end=%d, mid=%d, list=%s\n"%(n, start, end, mid, from_list))
+        # sys.stderr.flush()
         if n == from_list[mid]:
             found = True
         elif n < from_list[mid]:
@@ -71,8 +73,57 @@ def casual_find_pos_with_bin(n, from_list):
     else:
         return None
 
+
+# *params package up parameters into a tuple
+# If a list is present, call with casual_sum_param(*in_list)
+# While in the def, "*," is used to separate variable params and named parameters
+# named keywords could be variable with filler **kw as a dict
+# Therefore, the universe sigature could be def func(*args, **kw)
+def causal_sum_param(*params):
+    total = 0
+    for n in params:
+        total = total + n
+    return total
+
+
+# FlyWeight with functor, here defines @flyweight for classes.
+def flyweight(cls):
+    instances = dict()
+    return lambda *args, **kargs: instances.setdefault(
+                                            (args, tuple(kargs.items())),
+                                            cls(*args, **kargs))
+
+
+def casual_fibonacci_inf():
+    a, b = 0, 1
+    yield a
+    yield b
+    while True:
+        a, b = b, a+b
+        yield b
+
+
+def fibonacci_sub(start, end):
+    for cur in casual_fibonacci_inf():
+        if cur > end:
+            return
+        if cur >= start:
+            yield cur
+
+
+def fibonacci_num(n):
+    res = []
+    for index, fib_num in enumerate(casual_fibonacci_inf()):
+        print "%d: %d" %(index, fib_num)
+        res.append(fib_num)
+        if index >= n:
+            return res
+
 if __name__ == "__main__":
     print ">" * 80
     # Start doctest
     import doctest
     doctest.testmod(verbose=True)
+    print ">" * 80
+    print list(fibonacci_sub(0,5))
+    print fibonacci_num(10)

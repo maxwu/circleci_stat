@@ -38,6 +38,7 @@ class CasualDevIoTest(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
+
 """
  Note 1: Generally python unittest will not print stdout by default.
     To see the stdout results, nose + "-s" could collect the stdout and print by the end no matter the case passes or not.
