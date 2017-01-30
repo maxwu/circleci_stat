@@ -45,9 +45,12 @@ def casual_find_pos_with_bin(n, from_list):
     0
     >>> casual_find_pos_with_bin(6, range(7))
     6
-    >>> casual_find_pos_with_bin(7, range(6))
-    >>> casual_find_pos_with_bin(0, range(1,6))
-    >>> casual_find_pos_with_bin(8, [x*2+1 for x in range(6)])
+    >>> casual_find_pos_with_bin(7, range(6)) is None
+    True
+    >>> casual_find_pos_with_bin(0, range(1,6)) is None
+    True
+    >>> casual_find_pos_with_bin(8, [x*2+1 for x in range(6)]) is None
+    True
     >>> casual_find_pos_with_bin(4, [1,2,3,3,4,4,6])
     5
     """
