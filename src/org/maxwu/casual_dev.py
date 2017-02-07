@@ -66,6 +66,7 @@ if __name__ == "__main__":
     print_directory_contents(".")
     casual_zip(6)
     casual_list()
+    print "{:.1%}".format(2.0/149)
 
 
 # EOF
