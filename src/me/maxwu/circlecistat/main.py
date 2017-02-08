@@ -4,7 +4,7 @@ __author__ = 'maxwu'
 
 import yaml
 import os
-from org import ROOT_DIR
+from me import ROOT_DIR
 
 """Main script file to provide configuration loading, cli_app and version.
 """
