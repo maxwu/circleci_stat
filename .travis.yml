@@ -1,6 +1,9 @@
 language : python
 python:
+  - "2.6"
   - "2.7"
+  - "3.4"
+  - "3.5"
 
 sudo: required
 
@@ -9,7 +12,8 @@ dist: trusty
 install:
   - pip install -r requirements.txt
 
-script: nosetests ./test
+script: nosetests -s -v --with-xunit --xunit-file circlestat_nose_xunit.xml --with-coverage --cover-package=me.maxwu --cover-html ./test
+# -v -s --with-xunit --xunit-file XXXX_nose_xunit.xml --with-coverage --cover-package=cafe --cover-html --with-html
 
 branches :
    only :

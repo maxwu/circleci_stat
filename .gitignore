@@ -8,6 +8,9 @@ config.yml
 .cache/
 # Python Jupyter Notebook
 .ipynb_checkpoints
+# nosetests coverage
+cover/
+*nose_xunit.xml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
