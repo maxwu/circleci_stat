@@ -21,7 +21,7 @@ branches :
      - dev
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - codecov
 
 notifications :
    email :

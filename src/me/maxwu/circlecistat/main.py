@@ -13,7 +13,7 @@ VERSION = "1.0"
 CONFIG_YAML = "config.yaml"
 
 def cli_app():
-    print "CLI starts"
+    print "CLI starts: Not implemented cli_app()"
     pass
 
 
@@ -25,6 +25,7 @@ def get_cfg():
     return ycfg
 
 
+# FIXME: Considering a general env filter to figure out all "circleci_" prefixed environmental variables.
 def get_cfg_token():
     if os.environ.has_key('circleci_api_token'):
         value = os.environ['circleci_api_token']
