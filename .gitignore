@@ -5,6 +5,9 @@ config.yml
 
 # Intellij IDEA
 .idea/
+.cache/
+# Python Jupyter Notebook
+.ipynb_checkpoints
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
