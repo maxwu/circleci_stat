@@ -26,7 +26,11 @@ def get_cfg():
 
 
 def get_cfg_token():
-    return get_cfg()['circleci']['api-token']
+    if os.environ.has_key('circleci_api-token'):
+        value = os.environ['circleci_api-token']
+    else:
+        value = get_cfg()['circleci']['api-token']
+    return value
 
 
 if __name__ == '__main__':
