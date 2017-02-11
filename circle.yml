@@ -8,8 +8,9 @@ dependencies:
 
 general:
   branches:
-    - master
-    - dev
+    only:
+      - master
+      - dev
   artifacts:
     - "circlestat_nose_xunit.xml"
     - "cover"
