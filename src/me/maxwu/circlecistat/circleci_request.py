@@ -7,6 +7,10 @@ import requests
 from requests.auth import HTTPBasicAuth
 import logging
 import json
+try:
+    import xml.etree.cElementTree as ET
+except ImportError:
+    import xml.etree.ElementTree as ET
 
 
 logging.basicConfig(format = '%(asctime)s - %(levelname)s: %(message)s', level=logging.DEBUG)
@@ -21,16 +25,27 @@ class CircleCiReq(object):
     BASE_URL = "https://circleci.com/api/v1.1/"
 
     @classmethod
+    def get_request(cls, *args, **kwargs):
+        logger.debug("req url is {}".format(args[0]))
+
+        if 'timeout' not in kwargs:
+            kwargs['timeout'] = 10
+        res = requests.get(*args, **kwargs)
+        logger.debug("result is {}".format(res.text))
+
+        # Raise exception if the return code is not requests.codes.ok (200)
+        res.raise_for_status()
+        return res
+
+    @classmethod
     def get_artifacts(cls, token, vcs, username, project, build_num):
         """
         Get a list of artifacts generated with given build number
         """
         build_num = str(build_num)
         url = cls.BASE_URL + '/'.join(['project', vcs, username, project, build_num, 'artifacts'])
-        logger.info('req url is {0}'.format(url))
 
-        r = requests.get(url, auth=HTTPBasicAuth(token, ''))
-        logger.debug("result is:\n{0}".format(r.text))
+        r = cls.get_request(url, auth=HTTPBasicAuth(token, ''))
         json_res = r.json()
 
         for artifact in json_res:
@@ -39,11 +54,8 @@ class CircleCiReq(object):
     @classmethod
     def get_recent_30builds(cls, token, vcs, username, project):
         url = cls.BASE_URL + '/'.join(['project', vcs, username, project])
-        logger.info('req url is {0}'.format(url))
 
-        r = requests.get(url, auth=HTTPBasicAuth(token, ''))
-        # FIXME: add status code check
-        # FIXME: add log
+        r = cls.get_request(url, auth=HTTPBasicAuth(token, ''))
 
         res_json = r.json()
         for index, build in enumerate(res_json):
@@ -63,6 +75,44 @@ class CircleCiReq(object):
                                   build_num=num,
                                   )
 
+    @classmethod
+    def get_artifact_report(cls, url):
+        """ Get the artifact and parse it to XUnit to return
+        :param url: URL to XUnit XML format artifact
+        :return: string of XML
+        """
+        res = cls.get_request(url)
+        xunit = res.text
+        return xunit
+
+    @classmethod
+    def get_case_dict(cls, xunit):
+        """ Get test results in dict
+        :param xunit: XUnit in a string
+        :return: dict of test case {'pass': pass_count, 'fail': failure_count
+        """
+        root = ET.fromstring(xunit)
+
+        case_dict = {}
+        case_num = 0
+
+        for elem in root.iter('testcase'):
+            tcname = elem.get('classname') + '.' + elem.get('name')
+
+            if 'failure' not in [child.tag for child in elem]:
+                if tcname not in case_dict:
+                    case_dict[tcname] = {'pass': 1, 'fail': 0}
+                    case_num += 1
+                else:
+                    case_dict[tcname]['pass'] += 1
+            else:
+                if tcname not in case_dict:
+                    case_dict[tcname] = {'pass': 0, 'fail': 1}
+                    case_num += 1
+                else:
+                    case_dict[tcname]['fail'] += 1
+
+        return case_dict
 
 if __name__ == "__main__":
     pass

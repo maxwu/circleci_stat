@@ -11,10 +11,14 @@ CONFIG_YAML = "config.yaml"
 
 def get_cfg():
     # By default, the main module shall search config.yaml in app root dir.
-    path = '/'.join([ROOT_DIR, CONFIG_YAML])
+    path = '/'.join([get_root(), CONFIG_YAML])
     cfg = file(path)
     ycfg = yaml.load(cfg)
     return ycfg
+
+
+def get_root():
+    return ROOT_DIR
 
 
 # FIXME: Considering a general env filter to figure out all "circleci_" prefixed environmental variables.
