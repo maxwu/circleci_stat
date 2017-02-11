@@ -7,6 +7,7 @@ master ![TravisCI](https://travis-ci.org/maxwu/circleci_stat.svg?branch=master)
 dev    ![TravisCI](https://travis-ci.org/maxwu/circleci_stat.svg?branch=dev)
        [![codecov](https://codecov.io/gh/maxwu/circleci_stat/branch/dev/graph/badge.svg)](https://codecov.io/gh/maxwu/circleci_stat) 
 
+[![CircleCI](https://circleci.com/gh/maxwu/circleci_stat.svg?style=svg)](https://circleci.com/gh/maxwu/circleci_stat)
 
 This Python lib is developed to support fetching build artifacts from circleci cloud. 
 It also supports a fundamental statistic analysis to filter the high runners in UT.
