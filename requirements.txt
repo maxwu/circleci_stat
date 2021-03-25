@@ -26,7 +26,7 @@ public==2018.11.20
 py==1.8.0
 pycryptodomex==3.8.0
 pytest==4.3.1
-PyYAML==5.1
+PyYAML==5.4
 query-string==2018.11.20
 request==2018.11.20
 requests==2.21.0
