@@ -23,7 +23,7 @@ poyo==0.4.2
 proc==0.17
 property-manager==2.3.1
 public==2018.11.20
-py==1.8.0
+py==1.10.0
 pycryptodomex==3.8.0
 pytest==4.3.1
 PyYAML==5.1
