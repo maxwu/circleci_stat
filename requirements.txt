@@ -1,6 +1,6 @@
 certifi==2019.3.9
 chardet==3.0.4
-codecov==2.0.15
+codecov==2.0.16
 coloredlogs==10.0
 coverage==4.5.3
 decorator==4.4.0
